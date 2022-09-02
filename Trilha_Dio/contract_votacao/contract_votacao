@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: MIT
+// contrato para votação
+pragma solidity >=0.7.0 <0.9.0;
+
+contract Dio_votation{
+
+    // cada string vai receber um inteiro usando a funcão mapping 
+    mapping (string => uint256) public votesReceived;
+    
+
+    string[] public candidateList;
+
+    constructor (string[] memory candidateName ){
+
+        candidateList = candidateName;
+    }
+
+    // função totalVotesFor retorna o total de votos por candidato
+
+    function totalVotesFor(string memory candidate) view public returns(uint256){
+
+        require (validCandidate(candidate));
+         
+        // chama mapping para somar os votos por canditato 
+        return votesReceived[candidate];
+    }
+
+    // função voteForCandidate recebe um nome do candidato e soma + 1 para totalizar o número de votos
+    function voteForCandidate(string memory candidate) public{
+
+        require (validCandidate(candidate));
+        votesReceived[candidate] += 1;
+    }
+    
+
+    // função validCandidate compara o nome informado com o nome da lista de canditatos
+    // função keccak256 é para compararar strings no solidity
+    function validCandidate(string memory candidate) view public returns(bool){
+
+        for(uint i = 0; i < candidateList.length; i++){
+
+            if (keccak256(abi.encodePacked(candidateList[i])) == keccak256(abi.encodePacked(candidate))){
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+
+    
+}
+

@@ -1,0 +1,227 @@
+Lembretes linguagem Solidity:
+
+Tipos de Dados pode ser baixada a documentação detalhada  
+
+linguagem fortemente tipada
+
+Variáves podem ser de três tipos:
+
+1- Variaveis de Estado
+
+recebem os valores dos contratos por exemplo variáveis no método construtor
+
+2- Variáveis Locais
+
+apenas dentro do escopo por exemplo variáveis de dentro de uma função
+
+3- Variáveis Globais
+
+Variáveis especiais abrange todo o contexto do desenvolvimento e fornecem
+informações sobre a Blockchain e as propriedades de uma transação
+
+Escopo de Variáveis:
+
+Public:
+
+As Variáveis de estado públicas podem ser acessadas internamente, bem como
+por meio de mensagens, uma função getter é automaticamente gerada
+
+Internal:
+
+Escopo reduzido usado para heranças estas variáveis so podem ser acessados
+pelo contrato atual ou pelo contrato derivado dele sem utilizá-lo
+
+Private:
+
+Estas variáveis podem ser acessadas apenas internamente a partir do contrato atual
+e não são acessiveis para contratos derivados.
+
+Métodos:
+
+palavra chave function
+lista de parâmetros (pode ser vazio)
+
+exemplo:
+
+function getResult() public view returns(uint){
+
+uint a = 1;
+
+uint result = a * 2
+
+return result
+
+}
+
+Modificador:
+
+Verifica uma condição ou seja se a condição for atendida executa a função 
+caso contrário chama uma exceção
+
+palavra reservada modifier 
+
+exemplo:
+
+modifier onlyOwner{
+
+ require(msg.sender == owner);
+ _;
+
+}
+
+Funções tipos:
+
+View são funções somente leitura o que garante que as variáveis de estado não possam ser 
+modificadas após chamá-las, um método get é função view
+
+Funções Pure:
+
+As funções puras não leem nem modificam as variáveis de estado, retornando os valores apenas utilizando os parâmetros passados para a função ou variáveis locais presentes nela
+
+Bibliotecas:
+
+códigos reutilizaveis que pode ser chamadas por outros contratos
+Código comum criando uma biblioteca reduz o custo de gas,
+
+palavra reservada: import para importação de bibliotecas prontas
+
+exemplo:
+
+import <library_Name> from "./library-file.sol";
+
+library padrozinada:
+
+OpenZeppelin Contracts
+
+para escrever um biblioteca
+
+palavra chave library
+
+exemplo:
+
+library <library_Name>{
+
+   // block of code
+
+}
+
+
+Armazenamento de dados:
+
+1- memory semelhante a memoria ram volatil
+
+2- storage preserva os dados na blockchains e é mais caro do que memory
+semelhante ao disco rígido
+
+observação: variáveis de estado, variaves locais, structs e arrays
+são tratados como storage e argumentos de funções são sempre armazenados como memory
+
+
+Dados complexos:
+
+Array é classico sequencial e de tamanho fixo 
+
+exemplo declaração uint balance[10]
+
+Structs é uma estrutura de dados
+
+
+************************
+
+Inatalação ganache cli
+
+npm  install -g ganache-cli
+
+executar: ganache
+
+instalação truffe
+
+npm i -g truffe
+
+iniciar:  truffle init
+
+abrir o vs code: .code
+
+
+Instalação Hardhat
+
+https://hardhat.org/hardhat-runner/docs/getting-started
+
+npm install --save-dev hardhat
+npm install --save-dev "hardhat@^2.10.2" "@nomicfoundation/hardhat-toolbox@^1.0.1"
+
+inciar serviço:
+
+npx hardhat
+
+compilar:
+
+npx hardhat compile
+
+testar:
+
+npx hardhat test
+
+executando:
+
+npx hardhat run scripts/deploy.js
+
+abrir um novo no
+
+npx hardhat node
+
+acessando rede local
+
+npx hardhat run scripts/deploy.js --network localhost
+
+
+# instalação web3.js
+
+npm install web3 --save
+
+# acessar console node
+
+node
+
+# importando biblioteca
+
+const Web3 = require('web3')
+
+# criando uma instancia
+
+const web3 = new Web3('http://127.0.0.1:7545')
+
+#testando web3 (ganache)
+
+web3.eth.getAccounts().then(console.log)
+
+# criando uma instancia
+
+##em outro terminal no mesmo diretório
+
+notepad ABI.json  (criar arquivo)
+colar conteudo do ABI do contrato no remix
+
+executar:
+
+let abi = require("./ABI.json")  // cria variavel abi com Json do ABI contract
+let contract = new web3.eth.Contract(abi,"0x331e5f28A320779B707Fc0d203044a382efFa9e4") // instancia o contrato chamando a variavel abi e o endereço do contrato)
+
+# chamando os metodos do contrato pelo terminal web3
+
+contract.methods.nome_metodo().call().then(console.log)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
