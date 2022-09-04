@@ -1,0 +1,30 @@
+Instalação Hardhat
+
+https://hardhat.org/hardhat-runner/docs/getting-started
+
+npm install --save-dev hardhat
+npm install --save-dev "hardhat@^2.10.2" "@nomicfoundation/hardhat-toolbox@^1.0.1"
+
+inciar serviço:
+
+npx hardhat
+
+compilar:
+
+npx hardhat compile
+
+testar:
+
+npx hardhat test
+
+executando:
+
+npx hardhat run scripts/deploy.js
+
+abrir um novo no
+
+npx hardhat node
+
+acessando rede local
+
+npx hardhat run scripts/deploy.js --network localhost
