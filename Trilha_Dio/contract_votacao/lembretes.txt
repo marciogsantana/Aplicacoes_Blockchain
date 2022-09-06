@@ -211,6 +211,18 @@ let contract = new web3.eth.Contract(abi,"0x331e5f28A320779B707Fc0d203044a382efF
 
 contract.methods.nome_metodo().call().then(console.log)
 
+# Instalação IPFS
+
+https://ipfs.tech/#install
+
+https://github.com/ipfs/ipfs-desktop/releases
+
+caracteristicas:
+
+Entrega de conteúdo mais rápida e eficiente, para baixar pedaços de arauivos
+de nós geograficamente próximos minimizando a latência, os arquivos são divididos em pedaços
+hash é unico
+
 
 
 
