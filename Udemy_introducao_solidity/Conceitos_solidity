@@ -1,0 +1,98 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract conceitos{
+
+    // testando funções
+
+    string public nome = "marcio";
+
+    uint public numero;
+
+    function setNome (string memory _nome) public {
+
+        nome = _nome;
+    }
+
+    function getNome() public view returns (string memory) {
+
+        return nome;
+    }
+
+    function setNumero (uint _numero) public {
+
+        numero = _numero;
+    }
+
+    function getNumero() public view returns (uint){
+
+        return numero;
+    }
+
+    // testando mappings
+    // cada nome vai receber um valor de herenca
+    // visibilidade
+    // public e external ambas podem ser acessadas fora do contrato
+    // public pode ser acessado tanto de dentro como de fora 
+    // external apenas de fora
+    
+
+    mapping  (string => uint) public  heranca;
+
+    address owner = msg.sender;
+
+    function setValorReceber (string memory _nome, uint _valor) public {
+
+        require(msg.sender == owner, "apenas o dono do contrato pode executar");
+        heranca[_nome] = _valor;
+    }
+
+    // struct é bem semelhante a classes java
+
+    struct Piloto {
+
+        string nome;
+        uint forca;
+        uint velocidade;
+    }
+
+    // array de Piloto
+
+    Piloto[]  pilotos;  // pilotos é um array do tipo Piloto
+
+    function setPilotos (string memory _nome, uint _forca, uint _velocidade) public  {
+
+        Piloto memory novospilotos;
+        novospilotos.nome = _nome;
+        novospilotos.forca = _forca;
+        novospilotos.velocidade = _velocidade;
+
+        pilotos.push(novospilotos);
+    } 
+
+    function getPilotos(uint _id) public view returns (string memory, uint, uint){
+
+        Piloto memory getpilotos = pilotos[_id];
+        return (getpilotos.nome, getpilotos.forca, getpilotos.velocidade);
+
+    }
+
+    // função para alterar um piloto
+
+    function alteraPilotos(uint _id, string memory _nome, uint _forca, uint _velocidade) public {
+
+        Piloto storage alteraPiloto = pilotos[_id];  // storage para gravar na memoria
+        alteraPiloto.nome = _nome;
+        alteraPiloto.forca = _forca;
+        alteraPiloto.velocidade = _velocidade;
+
+    } 
+
+    // enuns é uma definição unica
+
+    enum tipoPilotos{
+
+        lento, // 0 = lento
+        medio, // 1 = medio
+        rapido // 2 = rapido
+    }
