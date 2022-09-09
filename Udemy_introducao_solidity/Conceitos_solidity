@@ -96,3 +96,6 @@ contract conceitos{
         medio, // 1 = medio
         rapido // 2 = rapido
     }
+    
+    // funções do tipo pure são escrevem e não leem nada na blockchain
+}
