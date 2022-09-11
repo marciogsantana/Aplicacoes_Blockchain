@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleCoin{
+
+    uint256 public totalSupply;
+    mapping (address=> uint256) public BalanceOf;
+    mapping (address => mapping (address => uint256)) public allowed;
+    address public  owner;
+    string public name;
+    string public symbol;
+    uint public decimals;
+
+    constructor () {
+
+        owner = msg.sender;
+        totalSupply = 1_000_000_000 * 10 ** decimals;
+        BalanceOf[owner] = totalSupply;
+        name = "Coin";
+        symbol = "CT";
+        decimals = 8;
+        
+    }
+
+    modifier onlyOwner{
+
+        require(msg.sender == owner,"Only the contract owner can call this function");
+        _;
+
+    }
+
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+    function changeOwner (address _newOwner) public onlyOwner {
+
+        owner = _newOwner;
+    }
+
+    function transfer(address receiver, uint256 numTokens) public returns (bool) {
+        require(numTokens <= BalanceOf[msg.sender], "saldo insuficiente");
+        BalanceOf[msg.sender] = BalanceOf[msg.sender]-numTokens;
+        BalanceOf[receiver] = BalanceOf[receiver]+numTokens;
+        emit Transfer(msg.sender, receiver, numTokens);
+        return true;
+    }
+
+
+
+    function approve(address _spender, uint256 _value) public  returns (bool) {
+        require(_spender != address(0));
+        allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+
+     function transferFrom(address _from, address _to, uint _value) public returns (bool success){
+        require(allowed[_from][msg.sender] >= _value);
+        require(BalanceOf[_from] >= _value);
+        require(_from != address(0));
+        require(_to != address(0));
+
+        BalanceOf[_from] -= _value;
+        BalanceOf[_to] += _value;
+        allowed[_from][msg.sender] -= _value;
+
+        emit Transfer(_from, _to, _value);
+    
+        return true;
+
+     }
+
+
+
+}
