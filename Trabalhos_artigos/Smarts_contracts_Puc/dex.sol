@@ -79,8 +79,9 @@ contract StakingToken is ERC20, Ownable {
    
     function compraStablecoin ( uint256 _valor) public investidor {
 
-        require(_valor != 0, "saldo insuficiente");
+        require(_valor <= 0, "valor nao informado");
         BalanceOf_stablecoin[msg.sender] = BalanceOf_stablecoin[msg.sender] + _valor;
+        assert(BalanceOf_stablecoin[msg.sender] > 0);
         emit Compra(msg.sender, _valor);
 
     }
@@ -89,10 +90,22 @@ contract StakingToken is ERC20, Ownable {
     // o valor da stablecoin é acumalado na piscina ligado ao dono do contrato
 
     function compraToken(uint256 numTokens) public investidor returns (bool) {
-        require(numTokens != 0, "saldo insuficiente");
+        require(numTokens <= 0, "valor incorreto");
+        require(BalanceOf_stablecoin[msg.sender] >= numTokens,"saldo insuficiente para compra do token");
         BalanceOf_token[msg.sender] =  BalanceOf_token[msg.sender] + numTokens;
         BalanceOf_stablecoin[msg.sender] = BalanceOf_stablecoin[msg.sender] - numTokens;
         BalanceOf_stablecoin[owner_stablecoin] = BalanceOf_stablecoin[owner_stablecoin]+numTokens;
+        emit Compra(msg.sender, numTokens);
+        return true;
+    }
+
+     // faz uma troca simples do token para stablecoin
+     function swapToken(uint256 numTokens) public investidor returns (bool) {
+        require(numTokens <= 0, "valor incorreto");
+        require(BalanceOf_token[msg.sender] >= numTokens,"saldo insuficiente para troca do token");
+        BalanceOf_token[msg.sender] =  BalanceOf_token[msg.sender] - numTokens;
+        BalanceOf_stablecoin[msg.sender] = BalanceOf_stablecoin[msg.sender] + numTokens;
+        BalanceOf_stablecoin[owner_stablecoin] = BalanceOf_stablecoin[owner_stablecoin] - numTokens;
         emit Compra(msg.sender, numTokens);
         return true;
     }
@@ -111,6 +124,7 @@ contract StakingToken is ERC20, Ownable {
         _burn(msg.sender, _stake);
         if(stakes[msg.sender] == 0) addStakeholder(msg.sender);
         stakes[msg.sender] = _stake;
+        assert(stakes[msg.sender] > 0);
     }
 
 
