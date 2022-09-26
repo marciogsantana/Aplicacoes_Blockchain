@@ -3,6 +3,8 @@
 // codigo usado para impplementacao 
 
 //import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol";
+// codigo usado para implementacao esta disponivel em:
+// https://solidity-by-example.org/defi/constant-product-amm/ 
 
 // implementar modifies   ok
 // implementar alertas    ok
